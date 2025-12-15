@@ -3,7 +3,7 @@
 Aplicativo React Native para gerenciamento de tarefas com subtarefas, autenticação Firebase e persistência de dados com Firestore.
 
 ## Conta de testes
-- Email: `tester@teste.com`
+- Email: `tester@test.com`
 - Senha: `123456`
 
 ## Screenshots
