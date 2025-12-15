@@ -5,16 +5,15 @@ type Props = PressableProps & {
   className?: string;
   textClassName?: string;
   children: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 export const Button = forwardRef<View, Props>(
-  ({ className, textClassName, disabled, children,  ...rest }, ref) => {
+  ({ className, textClassName, icon, disabled, children, ...rest }, ref) => {
     return (
       <Pressable
         ref={ref}
-        className={`rounded-lg bg-blue-500 px-3 py-2${
-          disabled ? 'opacity-60' : ''
-        } ${className ?? ''}`}
+        className={`justify-between items-center rounded-lg bg-blue-500 px-3 py-2 ${className ?? ''}`}
         disabled={disabled}
         {...rest}
       >
@@ -25,6 +24,7 @@ export const Button = forwardRef<View, Props>(
         >
           {children}
         </Text>
+        {icon}
       </Pressable>
     );
   },

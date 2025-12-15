@@ -5,22 +5,27 @@ type Props = TextInputProps & {
   label?: string;
   error?: string;
   className?: string;
+  required?: boolean;
 };
 
 export const Input = forwardRef<TextInput, Props>(
-  ({ label, error, className, ...rest }, ref) => {
+  ({ label, error, required = false, className, ...rest }, ref) => {
+    const baseClasses =
+      'w-full bg-slate-100 text-base border border-slate-50 text-slate-900 rounded-2xl border-0 px-4 py-3';
+
     return (
-      <View className="flex-1 bg">
+      <View className="w-full">
         {label && (
           <Text className="mb-1 text-sm font-semibold text-slate-800">
-            {label}
+            {label} {required ? "*" : ""}
           </Text>
         )}
         <TextInput
           ref={ref}
-          className={`w-full ${className ?? ''}`}
+          className={`${baseClasses} ${className ?? ''}`}
           placeholderTextColor="#94a3b8"
           returnKeyType="done"
+          underlineColorAndroid="transparent"
           {...rest}
         />
         {error && (

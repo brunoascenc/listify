@@ -7,11 +7,12 @@ export type CheckboxProps = PressableProps & {
   children?: React.ReactNode;
   selected: boolean;
   size?: number;
+  circleColor?: string;
 };
 
 export const Checkbox = forwardRef<View, CheckboxProps>(
   (
-    { className, size, selected, disabled, children, ...rest },
+    { className, size, selected, circleColor, disabled, children, ...rest },
     ref,
   ) => {
     return (
@@ -21,9 +22,9 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
         {...rest}
       >
         {selected ? (
-          <CheckCircle2 size={size ?? 18} color="#3b82f6" strokeWidth={2.5} />
+          <CheckCircle2 size={size ?? 18} color="#3b82f6" strokeWidth={2} />
         ) : (
-          <Circle size={size ?? 18} color="#cbd5e1" strokeWidth={2.5} />
+          <Circle size={size ?? 18} style={{backgroundColor: "#fff", borderRadius: 60 }} color={circleColor ?? "#cbd5e1"} strokeWidth={2} />
         )}
         {children}
       </Pressable>
