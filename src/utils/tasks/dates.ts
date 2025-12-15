@@ -4,7 +4,15 @@ import { UiTaskStatus } from '@/types/tasks/ui';
 
 const DATE_TIME_DISPLAY = 'dd/MM/yyyy HH:mm';
 
-export const normalizeDueDate = (value: Task['dueDate']) => {
+type NormalizableDate =
+  | Task['dueDate']
+  | { toDate?: () => Date }
+  | string
+  | number
+  | null
+  | undefined;
+
+export const normalizeDueDate = (value: NormalizableDate) => {
   if (!value) return null;
   if (value instanceof Date) return value;
   if (typeof (value as { toDate?: () => Date }).toDate === 'function') {
