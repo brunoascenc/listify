@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28798027548",
+    "project_id": "listify-eb678",
+    "storage_bucket": "listify-eb678.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28798027548:android:01f6b31d3d0f2a3dbc5cd9",
+        "android_client_info": {
+          "package_name": "com.app.listify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaEXoefz0kPI9YGAMdDq-Th9oxRLDG94w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

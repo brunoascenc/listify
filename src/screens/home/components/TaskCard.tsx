@@ -1,89 +1,72 @@
-import { useState } from 'react';
-import { Text, View } from 'react-native';
-import { MoreHorizontal } from 'lucide-react-native';
-import { Task, useTaskStore } from '@/store/useTaskStore';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Pressable, Text, View } from 'react-native';
+import { CalendarDays, MoreHorizontal } from 'lucide-react-native';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { CheckItem } from '@/components/ui/CheckItem';
+import { UiTask } from '@/types/tasks/ui';
 
 type Props = {
-  task: Task;
+  task: UiTask;
+  onToggleTask: (taskId: string, nextValue: boolean) => void;
+  onToggleSubtask: (
+    taskId: string,
+    subtaskId: string,
+    nextValue: boolean,
+  ) => void;
+  onAddSubtask: (taskId: string, title: string) => void;
+  onPress?: () => void;
 };
 
-export const TaskCard = ({ task }: Props) => {
-  const [adding, setAdding] = useState(false);
-  const [title, setTitle] = useState('');
-
-  const toggleTask = useTaskStore(state => state.toggleTask);
-  const toggleSubtask = useTaskStore(state => state.toggleSubtask);
-  const addSubtask = useTaskStore(state => state.addSubtask);
-
-  const handleAddSubtask = () => {
-    if (!title.trim()) return;
-    addSubtask(task.id, title.trim());
-    setTitle('');
-    setAdding(false);
-  };
-
+export const TaskCard = ({
+  task,
+  onToggleTask,
+  onToggleSubtask,
+  onPress,
+}: Props) => {
   return (
-    <View className="mb-3 rounded-2xl bg-white p-4 shadow-sm">
-      <View className="mb-3 flex-row items-center justify-between">
+    <Pressable className="mb-3 rounded-4xl bg-violet-50 p-3" onPress={onPress}>
+      <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-3">
-          <Checkbox
-            size={24}
-            onPress={() => toggleTask(task.id)}
-            selected={task.completed}
-          />
+          <View className="bg-white p-3 rounded-4xl">
+            <Checkbox
+              size={26}
+              onPress={() => onToggleTask(task.id, !task.completed)}
+              selected={task.completed}
+              circleColor="#3b82f6"
+            />
+          </View>
           <View>
-            <Text className="text-xs font-medium text-slate-500">
-              {task.dueLabel}
-            </Text>
+            <View className="flex-row items-center gap-1">
+              <CalendarDays color="#757575" size={14} />
+              <Text className="text-xs font-medium text-slate-500">
+                {task.dueDateLabel}
+                {task.dueTimeLabel ? ` às ${task.dueTimeLabel}` : ''}
+              </Text>
+            </View>
             <Text className="text-lg font-semibold text-slate-900">
               {task.title}
             </Text>
           </View>
         </View>
-        <MoreHorizontal size={20} color="#94a3b8" />
+        <View className="bg-white p-1 rounded-4xl mr-2">
+          <MoreHorizontal size={20} color="#94a3b8" />
+        </View>
       </View>
 
       {task.subtasks.length > 0 && (
-        <View className="mb-2">
+        <View className="mb-2 ml-15">
           {task.subtasks.map(sub => (
             <CheckItem
               key={sub.id}
-              onPress={() => toggleSubtask(task.id, sub.id)}
+              onPress={() => onToggleSubtask(task.id, sub.id, !sub.done)}
               className="flex-row items-center gap-3 py-1"
               selected={sub.done}
+              circleColor="#88abe2"
             >
               {sub.title}
             </CheckItem>
           ))}
         </View>
       )}
-
-      {adding ? (
-        <View className="mt-2 flex-row items-center gap-2 rounded-xl bg-slate-100 p-2">
-          <Input
-            value={title}
-            onChangeText={setTitle}
-            placeholder="Nova subtarefa"
-            className="text-sm text-slate-900"
-            onSubmitEditing={handleAddSubtask}
-          />
-          <Button onPress={handleAddSubtask} textClassName="text-sm">
-            Adicionar
-          </Button>
-        </View>
-      ) : (
-        <Button
-          onPress={() => setAdding(true)}
-          className="mt-1 w-fit rounded-lg bg-slate-100 px-3 py-2"
-          textClassName='text-sm font-semibold text-blue-500'
-        >
-          + Add item
-        </Button>
-      )}
-    </View>
+    </Pressable>
   );
-}
+};

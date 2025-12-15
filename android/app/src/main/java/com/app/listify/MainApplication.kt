@@ -1,4 +1,4 @@
-package com.listify
+package com.app.listify
 
 import android.app.Application
 import com.facebook.react.PackageList

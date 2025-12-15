@@ -1,13 +1,25 @@
 import './global.css';
-import { StatusBar } from 'react-native';
-import { Home } from '@/screens/home/view';
+import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { RootNavigator } from '@/navigation';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+});
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.app}>
       <StatusBar barStyle="dark-content" />
-      <Home />
+      <QueryClientProvider client={queryClient}>
+        <RootNavigator />
+      </QueryClientProvider>
     </SafeAreaProvider>
   );
 }
